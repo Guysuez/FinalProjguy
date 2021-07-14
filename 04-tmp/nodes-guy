@@ -26,7 +26,7 @@
                     "node.kubernetes.io/exclude-from-external-load-balancers": ""
                 },
                 "name": "minikube",
-                "resourceVersion": "45293",
+                "resourceVersion": "46350",
                 "uid": "753e8ee3-45db-419c-8083-edf7a4a543a5"
             },
             "spec": {
@@ -64,7 +64,7 @@
                 },
                 "conditions": [
                     {
-                        "lastHeartbeatTime": "2021-07-14T15:52:50Z",
+                        "lastHeartbeatTime": "2021-07-14T16:17:58Z",
                         "lastTransitionTime": "2021-07-13T22:06:49Z",
                         "message": "kubelet has sufficient memory available",
                         "reason": "KubeletHasSufficientMemory",
@@ -72,7 +72,7 @@
                         "type": "MemoryPressure"
                     },
                     {
-                        "lastHeartbeatTime": "2021-07-14T15:52:50Z",
+                        "lastHeartbeatTime": "2021-07-14T16:17:58Z",
                         "lastTransitionTime": "2021-07-13T22:06:49Z",
                         "message": "kubelet has no disk pressure",
                         "reason": "KubeletHasNoDiskPressure",
@@ -80,7 +80,7 @@
                         "type": "DiskPressure"
                     },
                     {
-                        "lastHeartbeatTime": "2021-07-14T15:52:50Z",
+                        "lastHeartbeatTime": "2021-07-14T16:17:58Z",
                         "lastTransitionTime": "2021-07-13T22:06:49Z",
                         "message": "kubelet has sufficient PID available",
                         "reason": "KubeletHasSufficientPID",
@@ -88,7 +88,7 @@
                         "type": "PIDPressure"
                     },
                     {
-                        "lastHeartbeatTime": "2021-07-14T15:52:50Z",
+                        "lastHeartbeatTime": "2021-07-14T16:17:58Z",
                         "lastTransitionTime": "2021-07-13T22:07:08Z",
                         "message": "kubelet is posting ready status",
                         "reason": "KubeletReady",
