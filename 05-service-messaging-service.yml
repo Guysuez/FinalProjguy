@@ -3,14 +3,10 @@ kind: Service
 metadata:
  name: messaging-service
 spec:
+ type: ClusterIP
  selector:
   tier: msg
-ports: # Map incoming port to target port
- - name: http # Setting multiple ports listterns
-   protocol: TCP
-   port: 80
-   targetPort: 9376
- - name: https
-   protocol: TCP
-   port: 443
-   targetPort: 9388
+ ports:
+  - protocol: TCP
+    port: 6379
+    targetPort: 6379
