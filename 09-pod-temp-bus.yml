@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+ name: finance-guy
+---
+apiVersion: v1 
+kind: Pod 
+metadata:
+ name: temp-bus
+ namespace: finance-guy
+spec:
+ containers:
+  - name: temp-bus
+    image: redis:alpine 
