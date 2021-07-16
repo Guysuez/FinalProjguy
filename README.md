@@ -78,15 +78,46 @@ kubectl get pods -l env=dev -L env
 
 6. Get the pods with label env=prod
 
-kubectl get pods -l env=prod -L en
+kubectl get pods -l env=prod 
+
 7. Get the pods with label env=prod and also output the labels
+
+kubectl get pods -l env=prod -L env
+
 8. Get the pods with label env
+
+kubectl get pods -l env
+
 9. Get the pods with labels env=dev and env=prod
+
+kubectl get pods -L env | egrep 'dev|prod'
+
 10. Get the pods with labels env=dev and env=prod and output the labels as well
+
+kubectl get pods -L env | egrep 'dev|prod'
+
 11. Change the label for one of the pod to env=uat and list all the pods to verify
-12. Remove the labels for the pods that we created now and verify all the labels are
-removed
+
+kubectl label --overwrite pods/"podname" env=uat
+
+12. Remove the labels for the pods that we created now and verify all the labels are removed
+
+to remove:
+
+kubectl label pods -l env env-
+
+to verify:
+
+kubectl get pods -l env
+
+if you ran the yml file given in answer 2, you must change the yml! it is a deployment with labels and the deployment will act upon the desired state. 
+
+
 13. Let’s add the label app=nginx for all the pods and verify (using kubectl)
+
+kubectl label --all app=nginx
+
+
 14. Get all the nodes with labels (if using minikube you would get only master node)
 15. Label the worker node nodeName=nginxnode
 16. Create a Pod that will be deployed on the worker node with the label
