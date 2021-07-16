@@ -6,5 +6,5 @@ metadata:
   tier: msg
 spec:
  containers:
-  - name: redis
-    image: redis:alpine
+ - name: redis
+   image: redis:alpine

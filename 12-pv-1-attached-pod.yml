@@ -24,7 +24,7 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata:
- creationTimestamp: Null
+ creationTimestamp: null
  name: use-pv-guy
  labels:
   run: use-pv-guy
