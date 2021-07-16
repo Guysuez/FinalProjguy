@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+ name: pv1
+spec:
+ capacity:
+  storage: 200Mi
+ accessModes:
+  - ReadWriteMany
+ hostPath:
+  path: /data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+ name: pv1-claim
+spec:
+ accessModes:
+  - ReadWriteMany
+ resources:
+  requests:
+   storage: 100Mi
+---
+apiVersion: v1
+kind: Pod
+metadata:
+ creationTimestamp: Null
+ name: use-pv-guy
+ labels:
+  run: use-pv-guy
+  name: use-pv-guy
+spec:
+ containers:
+ - image: nginx
+   name: use-pv-guy
+   resources: {}
+   volumeMounts:
+    - mountPath: /data
+      name: pv1-claim
+ volumes:
+ - name: pv1-claim
+   persistentVolumeClaim:
+    claimName: pv1-claim
+ dnsPolicy: ClusterFirst
+ restartPolicy: Always
+status: {}
