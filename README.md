@@ -54,15 +54,17 @@ this will show the update in the "annotations" when describing the deployment.
 
 
 Pod Design Questions:
-1. Type the command for:
-Get pods with label information
+1. Type the command for get pods with label information
 
-kubectl describe pods, 
+kubectl describe pods;
+kubectl get pods --show-labels
 
 2. Create 5 nginx pods in which two of them is labeled env=prod and three of them is labeled env=dev:
 
 kubectl apply -f Answer-for-Pod-Design-Q2.yml
+
 or write;
+
 kubectl run "name" --image=nginx --labels env=prod (X2)
 kubectl run "name" --image-nginx --labels env=dev (X3)
 
@@ -70,7 +72,12 @@ kubectl run "name" --image-nginx --labels env=dev (X3)
 
 kubectl describe deployment deploy-dev; kubectl describe deployment deploy-prod
 
+or
+
+kubectl get pods --show-labels
+
 4. Get the pods with label env=dev
+
 kubectl get -l env=dev
 
 5. Get the pods with label env=dev and also output the labels
@@ -112,6 +119,10 @@ kubectl label pods -l env env-
 to verify:
 
 kubectl get pods -l env
+
+or
+
+kubectl get pods --show-labels
 
 if you applied the yml file given in answer 2, you must change the yml! it is a deployment with labels and the deployment will act upon the desired state defined by the yml. 
 
