@@ -1,7 +1,8 @@
 # FinalProjguy
-YAMLs:
+YAMLs of first 16 questions:
+first, if you cloned this repo, cd inside the folder "First-16-Question".
 
-1. assignment, deploying nginx pod:
+1. Deploy nginx pod:
 
 kubectl apply -f 01-nginx-pod-deploy.yml
 
@@ -124,6 +125,35 @@ to verify:
 kubectl get pods -L app
 
 14. Get all the nodes with labels (if using minikube you would get only master node)
+
+kubectl get nodes --show-lables
+
 15. Label the worker node nodeName=nginxnode
-16. Create a Pod that will be deployed on the worker node with the label
-nodeName=nginxnode
+
+kubectl label node/"nodename" nodeName=nginxnode
+
+verify:
+
+kubectl get nodes --show-labels 
+
+
+16. Create a Pod that will be deployed on the worker node with the label nodeName=nginxnode
+
+kubectl apply -f Answer-for-Pod-design-Q16.yml
+
+17. Verify the pod that it is scheduled with the node selector on the right node… fix it if it’s not behind scheduled.
+
+kubectl get pod nginx -o wide 
+
+
+18. Verify the pod nginx that we just created has this label
+
+kubectl describe pod nginx | grep Node-Selectors
+
+
+Deployments:
+
+1. Create the deployment:
+
+
+
