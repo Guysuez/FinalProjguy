@@ -10,10 +10,10 @@ spec:
  template:
   metadata:
    labels:
-    env: dev
+    env: prod
      spec:
    containers:
-   - name: deploy-dev
+   - name: deploy-prod
      image: nginx
 ---
 apiVersion: apps/v1
@@ -28,8 +28,8 @@ spec:
  template:
   metadata:
    labels:
-    env: prod
+    env: dev
    spec:
     containers:
-    - name: deploy-prod
+    - name: deploy-dev
       image: nginx

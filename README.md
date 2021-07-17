@@ -100,6 +100,8 @@ kubectl get pods -L env | egrep 'dev|prod'
 
 kubectl label --overwrite pods/"podname" env=uat
 
+if you applied the yml given in answer 2, you must change the labels inside the yml and apply again! the yml file defines the desired state for the deployment and the pods will not change the label.
+
 12. Remove the labels for the pods that we created now and verify all the labels are removed
 
 to remove:
@@ -110,13 +112,16 @@ to verify:
 
 kubectl get pods -l env
 
-if you ran the yml file given in answer 2, you must change the yml! it is a deployment with labels and the deployment will act upon the desired state. 
+if you applied the yml file given in answer 2, you must change the yml! it is a deployment with labels and the deployment will act upon the desired state defined by the yml. 
 
 
 13. Let’s add the label app=nginx for all the pods and verify (using kubectl)
 
 kubectl label --all app=nginx
 
+to verify:
+
+kubectl get pods -L app
 
 14. Get all the nodes with labels (if using minikube you would get only master node)
 15. Label the worker node nodeName=nginxnode
