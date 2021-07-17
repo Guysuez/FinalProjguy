@@ -166,5 +166,55 @@ Deployments:
 
 1. Create the deployment:
 
+kubectl create deployment webapp --image=nginx --dry-run -o yaml > webapp.yaml
+
+to run it with the 5 replicas already made, apply the file I edited; called 01-webapp.yaml under Deployments directory.
 
 
+2. Get the deployment rollout status
+
+kubectl rollout status deployments/webapp
+
+
+3. Get the replicaset that created with this deployment
+
+kubectl get replicasets
+
+
+4. EXPORT the yaml of the replicaset and pods of this deployment
+
+kubectl get deployments/webapp -o yaml > "filename"
+
+kubectl get replicaset/webapp-"result of Q3" -o yaml > "filename"
+
+
+5. Delete the deployment you just created and watch all the pods are also being deleted
+
+kubectl delete -f webapp.yaml
+
+kubectl get pods --watch
+
+
+6. Create a deployment of webapp with image nginx:1.17.1 with container port 80 and verify the image version
+
+
+7. Update the deployment with the image version 1.17.4 and verify
+
+
+8. Check the rollout history and make sure everything is ok after the update
+
+
+9. Undo the deployment to the previous version 1.17.1 and verify Image has the
+previous version
+
+
+10. Update the deployment with the wrong image version 1.100 and verify something is wrong with the deployment
+
+
+11. Apply the autoscaling to this deployment with and verify hpa is created and replicas are increased
+
+
+13. Clean the cluster by deleting deployment and hpa you just created
+
+14. Create a job and make it run 10 times one after one (run > exit > run >exit ..) using
+the following configuration:
