@@ -1,0 +1,11 @@
+#instructions for use are in readme.
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+ name: nginx-critical
+spec:
+ containers:
+ - name: nginx-critical
+   image: nginx

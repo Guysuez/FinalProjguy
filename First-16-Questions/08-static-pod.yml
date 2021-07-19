@@ -1,5 +1,19 @@
-apiVersion: apps/v1
+# for this one to work, some messy work is needed;
+# first, ssh into your master node, I use minikube so a "minikube ssh" command was used. 
+# then, inspect the configuration file of the kubelet to see where it reads static pods from.
+# this can be done with "cat /var/lib/kubelet/config.yaml | grep static".
+# after finding the place is /etc/kubernetes/manifests, create a yaml file inside.
+# the following yaml is what I created using vi editor.
+# once you save the yml, restart the kubectl service so it will re-read the manifests directory.
+# full results are posted within the readme file.
+
+apiVersion: v1
 kind: Pod
 metadata:
  name: static-busybox
- 
+spec:
+ containers:
+ - name: static-busybox
+   image: busybox
+   command: ["sleep"]
+   args: ["1000"]

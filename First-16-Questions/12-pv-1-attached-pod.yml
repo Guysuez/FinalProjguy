@@ -6,7 +6,7 @@ spec:
  capacity:
   storage: 200Mi
  accessModes:
-  - ReadWriteMany
+  - ReadWriteOnce
  hostPath:
   path: /data
 ---
@@ -16,7 +16,7 @@ metadata:
  name: pv1-claim
 spec:
  accessModes:
-  - ReadWriteMany
+  - ReadWriteOnce
  resources:
   requests:
    storage: 100Mi
