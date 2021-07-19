@@ -337,23 +337,25 @@ Pod Design Questions:
 
 1. Type the command for get pods with label information
 
-
+```
 kubectl get pods --show-labels
-
+```
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl get pods --show-labels 
 NAME                          READY   STATUS    RESTARTS   AGE     LABELS
 nginx-critical-minikube-m02   1/1     Running   0          5m26s   <none>
 static-busybox-minikube       1/1     Running   8          137m    <none>
-
+```
 
 
 
 2. Create 5 nginx pods in which two of them is labeled env=prod and three of them is labeled env=dev:
 
-
+```
 kubectl run "name" --image=nginx --labels env=prod (X2)
 kubectl run "name" --image-nginx --labels env=dev (X3)
-
+```
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl run pod01 --image=nginx --labels env=prod
 pod/pod01 created
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl run pod02 --image=nginx --labels env=prod
@@ -364,13 +366,15 @@ guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl 
 pod/pod04 created
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl run pod05 --image=nginx --labels env=dev
 pod/pod05 created
-
+```
 
 
 3. Verify all the pods are created with correct labels
 
+```
 kubectl get pods --show-labels
-
+```
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl get pods --show-labels 
 NAME                          READY   STATUS    RESTARTS   AGE     LABELS
 nginx-critical-minikube-m02   1/1     Running   0          9m16s   <none>
@@ -380,66 +384,71 @@ pod03                         1/1     Running   0          75s     env=dev
 pod04                         1/1     Running   0          69s     env=dev
 pod05                         1/1     Running   0          62s     env=dev
 static-busybox-minikube       1/1     Running   8          140m    <none>
-
-
+```
 
 
 4. Get the pods with label env=dev
 
+```
 kubectl get pod -l env=dev
-
+```
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl get pod -l env=dev
 NAME    READY   STATUS    RESTARTS   AGE
 pod03   1/1     Running   0          112s
 pod04   1/1     Running   0          106s
 pod05   1/1     Running   0          99s
-
-
-
+```
 
 
 5. Get the pods with label env=dev and also output the labels
 
-
+```
 kubectl get pods -l env=dev --show-labels
-
-
+```
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl get pod -l env=dev --show-labels 
 NAME    READY   STATUS    RESTARTS   AGE     LABELS
 pod03   1/1     Running   0          3m1s    env=dev
 pod04   1/1     Running   0          2m55s   env=dev
 pod05   1/1     Running   0          2m48s   env=dev
-
+```
 
 
 
 6. Get the pods with label env=prod
 
+```
 kubectl get pods -l env=prod 
+```
 
-
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl get pod -l env=prod
 NAME    READY   STATUS    RESTARTS   AGE
 pod01   1/1     Running   0          4m26s
 pod02   1/1     Running   0          4m20s
-
+```
 
 7. Get the pods with label env=prod and also output the labels
 
+```
 kubectl get pods -l env=prod --show-labels
-
+```
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl get pods -l env=prod --show-labels
 NAME    READY   STATUS    RESTARTS   AGE     LABELS
 pod01   1/1     Running   0          5m11s   env=prod
 pod02   1/1     Running   0          5m5s    env=prod
-
+```
 
 
 8. Get the pods with label env
 
+```
 kubectl get pods -l env
+```
 
-
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl get pods -l env
 NAME    READY   STATUS    RESTARTS   AGE
 pod01   1/1     Running   0          5m38s
@@ -447,45 +456,50 @@ pod02   1/1     Running   0          5m32s
 pod03   1/1     Running   0          5m19s
 pod04   1/1     Running   0          5m13s
 pod05   1/1     Running   0          5m6s
+```
 
 
 9. Get the pods with labels env=dev and env=prod
 
+```
 kubectl get pods -L env | egrep 'dev|prod'
+```
 
-
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl get pods -L env | egrep 'dev|prod'
 pod01                         1/1     Running   0          8m39s   prod
 pod02                         1/1     Running   0          8m33s   prod
 pod03                         1/1     Running   0          8m20s   dev
 pod04                         1/1     Running   0          8m14s   dev
 pod05                         1/1     Running   0          8m7s    dev
-
+```
 
 
 10. Get the pods with labels env=dev and env=prod and output the labels as well
 
+```
 kubectl get pods -l env --show-labels | egrep 'dev|prod'
+```
 
-
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl get pods -l env --show-labels | egrep 'dev|prod'
 pod01   1/1     Running   0          9m33s   env=prod
 pod02   1/1     Running   0          9m27s   env=prod
 pod03   1/1     Running   0          9m14s   env=dev
 pod04   1/1     Running   0          9m8s    env=dev
 pod05   1/1     Running   0          9m1s    env=dev
-
+```
 
 
 11. Change the label for one of the pod to env=uat and list all the pods to verify
 
+```
 kubectl label --overwrite pods/"podname" env=uat
+```
 
-
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl label pod pod01 env=uat --overwrite 
 pod/pod01 labeled
-
-
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl get pods --show-labels 
 NAME                          READY   STATUS    RESTARTS   AGE    LABELS
 nginx-critical-minikube-m02   1/1     Running   0          19m    <none>
@@ -495,32 +509,32 @@ pod03                         1/1     Running   0          11m    env=dev
 pod04                         1/1     Running   0          11m    env=dev
 pod05                         1/1     Running   0          11m    env=dev
 static-busybox-minikube       1/1     Running   9          150m   <none>
-
+```
 
 
 
 12. Remove the labels for the pods that we created now and verify all the labels are removed
 
 to remove:
-
+```
 kubectl label pods -l env env-
-
-
+```
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl label pods -l env env-
 pod/pod01 labeled
 pod/pod02 labeled
 pod/pod03 labeled
 pod/pod04 labeled
 pod/pod05 labeled
-
+```
 
 
 to verify:
-
+```
 kubectl get pods --show-labels
+```
 
-
-
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl get pod --show-labels 
 NAME                          READY   STATUS    RESTARTS   AGE    LABELS
 nginx-critical-minikube-m02   1/1     Running   0          20m    <none>
@@ -530,17 +544,15 @@ pod03                         1/1     Running   0          12m    <none>
 pod04                         1/1     Running   0          12m    <none>
 pod05                         1/1     Running   0          12m    <none>
 static-busybox-minikube       1/1     Running   9          152m   <none>
-
-
-
-
+```
 
 
 13. Let’s add the label app=nginx for all the pods and verify (using kubectl)
 
+```
 kubectl pods label --all app=nginx
-
-
+```
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl label pods --all app=nginx
 pod/nginx-critical-minikube-m02 labeled
 pod/pod01 labeled
@@ -549,14 +561,14 @@ pod/pod03 labeled
 pod/pod04 labeled
 pod/pod05 labeled
 pod/static-busybox-minikube labeled
-
+```
 
 
 to verify:
-
+```
 kubectl get pods --show-labels
-
-
+```
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl get pods --show-labels
 NAME                          READY   STATUS    RESTARTS   AGE    LABELS
 nginx-critical-minikube-m02   1/1     Running   0          22m    app=nginx
@@ -566,129 +578,142 @@ pod03                         1/1     Running   0          14m    app=nginx
 pod04                         1/1     Running   0          14m    app=nginx
 pod05                         1/1     Running   0          14m    app=nginx
 static-busybox-minikube       1/1     Running   9          154m   app=nginx
-
+```
 
 
 
 14. Get all the nodes with labels (if using minikube you would get only master node)
 
+```
 kubectl get nodes --show-labels
-
+```
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl get nodes --show-labels
 NAME           STATUS   ROLES    AGE     VERSION   LABELS
 minikube       Ready    <none>   3d11h   v1.21.2   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=minikube,kubernetes.io/os=linux
 minikube-m02   Ready    <none>   31h     v1.21.2   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=minikube-m02,kubernetes.io/os=linux
 minikube-m03   Ready    <none>   3h58m   v1.21.2   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=minikube-m03,kubernetes.io/os=linux
-
+```
 
 
 15. Label the worker node nodeName=nginxnode
 
+```
 kubectl label node/"nodename" nodeName=nginxnode
-
-
+```
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl label node minikube-m02 nodeName=nginxnode
 node/minikube-m02 labeled
-
+```
 
 verify:
-
+```
 kubectl get nodes --show-labels 
-
-
+```
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl get node minikube-m02 --show-labels 
 NAME           STATUS   ROLES    AGE   VERSION   LABELS
 minikube-m02   Ready    <none>   31h   v1.21.2   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=minikube-m02,kubernetes.io/os=linux,nodeName=nginxnode
-
+```
 
 
 
 16. Create a Pod that will be deployed on the worker node with the label nodeName=nginxnode
-
+```
 kubectl apply -f Answer-for-Pod-design-Q16
-
-
+```
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl apply -f ../Pod-Design-Questions/Answer-for-Pod-design-Q16.yml 
 pod/nginx created
-
+```
 
 17. Verify the pod that it is scheduled with the node selector on the right node… fix it if it’s not behind scheduled.
 
+```
 kubectl get pod nginx -o wide 
-
+```
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl get pod nginx -o wide
 NAME    READY   STATUS    RESTARTS   AGE   IP           NODE           NOMINATED NODE   READINESS GATES
 nginx   1/1     Running   0          99s   172.17.0.5   minikube-m02   <none>           <none>
-
+```
 
 
 18. Verify the pod nginx that we just created has this label
 
+```
 kubectl describe pod nginx | grep Node-Selectors
-
+```
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl describe pod nginx | grep Node-Selectors
 Node-Selectors:              nodeName=nginxnode
-
+```
 
 
 Deployments:
 
 1. Create the deployment:
 
+```
 kubectl create deployment webapp --image=nginx --dry-run -o yaml > webapp.yaml
+```
 
 to run it with the 5 replicas already made, apply the file I edited; called 01-webapp.yaml under Deployments directory.
 
-
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl apply -f 01-webapp.yaml 
 deployment.apps/webapp created
-
+```
 
 
 2. Get the deployment rollout status
 
-
+```
 kubectl rollout status deployments/webapp
-
-
+```
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl rollout status deployment webapp 
 deployment "webapp" successfully rolled out
-
+```
 
 
 3. Get the replicaset that created with this deployment
 
-
+```
 kubectl get replicasets
-
-
+```
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl get replicasets
 NAME               DESIRED   CURRENT   READY   AGE
 webapp-5654c984c   5         5         5       118s
-
+```
 
 
 4. EXPORT the yaml of the replicaset and pods of this deployment
 
-
+```
 kubectl get deployments/webapp -o yaml > "filename"
-
-
+```
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl get deployments/webapp -o yaml > 04-webapp-deployment.yaml
-
-
+```
+```
 kubectl get replicaset webapp-"result of Q3" -o yaml > "filename"
-
+```
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl get replicaset webapp-5654c984c -o yaml > 04-webapp-replicaset.yaml
-
+```
 
 5. Delete the deployment you just created and watch all the pods are also being deleted
 
+```
 kubectl delete -f 01-webapp.yaml
-
+```
+```
 kubectl get pods --watch
+```
 
-
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl delete -f 01-webapp.yaml 
 ^[[A^[[A^[[A^[[Adeployment.apps "webapp" deleted
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl get pods --watch
@@ -711,29 +736,30 @@ webapp-5654c984c-hv9vt        0/1     Terminating   0          34s
 NAME                          READY   STATUS    RESTARTS   AGE
 nginx-critical-minikube-m02   1/1     Running   0          8m45s
 static-busybox-minikube       1/1     Running   10         8m45s
-
+```
 
 
 6. Create a deployment of webapp with image nginx:1.17.1 with container port 80 and verify the image version
 
+```
 kubectl create deploy webapp --image=nginx:1.17.1 --dry-run -o yaml > 06-webapp.yaml
-
+```
+```
 for comfort run kubectl apply -f 06-webapp.yaml
+```
 
-
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl apply -f 06-webapp.yaml 
 deployment.apps/webapp created
-
-
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl describe pod webapp-b7889ff56-xk4vd  | grep image
   Normal  Pulling    2m46s  kubelet            Pulling image "nginx:1.17.1"
   Normal  Pulled     2m25s  kubelet            Successfully pulled image "nginx:1.17.1" in 21.184697008s
-
+```
 
 
 7. Update the deployment with the image version 1.17.4 and verify
 
-
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl rollout status deployment webapp 
 Waiting for deployment "webapp" rollout to finish: 1 old replicas are pending termination...
 Waiting for deployment "webapp" rollout to finish: 1 old replicas are pending termination...
@@ -743,50 +769,53 @@ deployment.apps/webapp image updated
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl describe pod webapp-9cf988f87-vpxjp  | grep image
   Normal  Pulling    54s   kubelet            Pulling image "nginx:1.17.4"
   Normal  Pulled     32s   kubelet            Successfully pulled image "nginx:1.17.4" in 22.303459691s
-
+```
 
 8. Check the rollout history and make sure everything is ok after the update
 
-
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl rollout history deployment webapp 
 deployment.apps/webapp 
 REVISION  CHANGE-CAUSE
 1         <none>
 2         <none>
-
+```
 
 
 
 9. Undo the deployment to the previous version 1.17.1 and verify Image has the
 previous version
 
-
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl rollout undo deployment webapp 
 deployment.apps/webapp rolled back
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl rollout status deployment webapp 
 deployment "webapp" successfully rolled out
-
+```
 
 
 10. Update the deployment with the wrong image version 1.100 and verify something is wrong with the deployment
 
-
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl set image deployment webapp nginx=nginx:1.000
 deployment.apps/webapp image updated
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl rollout status deployment webapp 
 Waiting for deployment "webapp" rollout to finish: 1 old replicas are pending termination...
-
+```
 a. Expect: kubectl get pods (ImagePullErr)
 
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl get pods 
 NAME                          READY   STATUS             RESTARTS   AGE
 nginx-critical-minikube-m02   1/1     Running            0          23m
 static-busybox-minikube       1/1     Running            11         23m
 webapp-7d8467f67-lhmzx        0/1     ImagePullBackOff   0          57s
 webapp-b7889ff56-m4rw5        1/1     Running            0          2m3s
+```
 
 b. Undo the deployment with the previous version and verify everything is Ok
 
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl rollout undo deployment webapp 
 deployment.apps/webapp rolled back
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl rollout status deployment webapp 
@@ -797,10 +826,11 @@ REVISION  CHANGE-CAUSE
 2         <none>
 4         <none>
 5         <none>
-
+```
 
 d. Check the history of the specific revision of that deployment
 
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl rollout history deployment  webapp --revision=5
 deployment.apps/webapp with revision #5
 Pod Template:
@@ -814,9 +844,11 @@ Pod Template:
     Environment:	<none>
     Mounts:	<none>
   Volumes:	<none>
+```
 
   e. update the deployment with the image version latest and check the history and verify nothing is going on
 
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl set image deploy webapp nginx=nginx:latest
 deployment.apps/webapp image updated
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl rollout history deployment webapp 
@@ -831,12 +863,12 @@ NAME                          READY   STATUS    RESTARTS   AGE
 nginx-critical-minikube-m02   1/1     Running   0          33m
 static-busybox-minikube       1/1     Running   12         33m
 webapp-6b9d4c7497-4dptj       1/1     Running   0          5m19s
-
+```
 
 
 11. Apply the autoscaling to this deployment with and verify hpa is created and replicas are increased
 
-
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl autoscale deployment webapp --max=20 --min=10 --cpu-percent=85
 horizontalpodautoscaler.autoscaling/webapp autoscaled
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl get horizontalpodautoscalers.autoscaling webapp 
@@ -845,10 +877,11 @@ webapp   Deployment/webapp   <unknown>/85%   10        20        10         69s
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl get deployments.apps 
 NAME     READY   UP-TO-DATE   AVAILABLE   AGE
 webapp   10/10   10           10          24m
-
+```
 
 13. Clean the cluster by deleting deployment and hpa you just created
 
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl delete horizontalpodautoscalers.autoscaling webapp 
 horizontalpodautoscaler.autoscaling "webapp" deleted
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl delete -f 0
@@ -860,11 +893,12 @@ guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl get pod
 NAME                          READY   STATUS    RESTARTS   AGE
 nginx-critical-minikube-m02   1/1     Running   0          37m
 static-busybox-minikube       1/1     Running   12         37m
-
+```
 
 14. Create a job and make it run 10 times one after one (run > exit > run >exit ..) using
 the following configuration:
 
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl create job hello-job --image=busybox --dry-run -o yaml -- echo "hello I am from job" > hello-job.yaml
 W0720 01:27:12.313473 2496665 helpers.go:557] --dry-run is deprecated and can be replaced with --dry-run=client.
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl delete -f hello-job.yaml 
@@ -880,20 +914,24 @@ hello-job   1/10          8s         8s
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl get jobs
 NAME        COMPLETIONS   DURATION   AGE
 hello-job   2/10          10s        10s
+```
+
 
 CONFIG MAP:
 
 1. Create a file called config.txt with two values key1=value1 and key2=value2 and
 verify the file
 
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/CONFIG-MAP$ cat >> config.txt <<EOF
 > key1=value1
 > key2=value2
 > EOF
+```
 
 2. Create a configmap named keyvalcfgmap and read data from the file config.txt and verify that configmap is created correctly:
 
-
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/CONFIG-MAP$ kubectl create configmap keyvalcfgmap --from-file=config.txt 
 configmap/keyvalcfgmap created
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/CONFIG-MAP$ kubectl get configmaps 
@@ -914,11 +952,14 @@ key1=value1
 key2=value2
 
 Events:  <none>
+```
+
 
 3. Create an nginx pod and load environment values from the above configmap
 keyvalcfgmap and exec into the pod and verify the environment variables and delete
-the pod
+the pod:
 
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/CONFIG-MAP$ kubectl apply -f nginx-pod.yml 
 pod/nginx created
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/CONFIG-MAP$ kubectl exec -it nginx -- env
@@ -940,4 +981,6 @@ NGINX_VERSION=1.21.1
 NJS_VERSION=0.6.1
 PKG_RELEASE=1~buster
 HOME=/root
+```
 
+Thanks for reading :)
