@@ -62,35 +62,40 @@ kubectl get -o json nodes > ./04-tmp/nodes-guy
 
 solution is very long, added the folder and file into the git.
 
-
+```
+cat ./04-tmp/nodes-guy
+```
 
 5. Create a service to expose message pod:
-
+```
 kubectl apply -f 05-06-service-messaging-service.yml
-
+```
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl apply -f 05-06-service-messaging-service.yml 
 service/messaging-service created
-
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl get svc
 NAME                TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
 kubernetes          ClusterIP   10.96.0.1        <none>        443/TCP    5d20h
 messaging-service   ClusterIP   10.105.184.201   <none>        6379/TCP   19s
-
+```
 
 
 7. create a deployment hr-web-app:
 
+```
 kubectl apply -f 07-hr-web-app-deployment.yml
-
+```
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl apply -f 07-hr-web-app-deployment.yml 
 deployment.apps/hr-web-app created
-
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl get deployments
 NAME         READY   UP-TO-DATE   AVAILABLE   AGE
 hr-web-app   2/2     2            2           35s
+```
 
 8. create a static-pod that uses busybox image and command sleep 1000:
 
+```
 root@minikube:~# ls /etc/kubernetes/manifests/
 etcd.yaml            kube-controller-manager.yaml  static-busybox.yml
 kube-apiserver.yaml  kube-scheduler.yaml
@@ -119,17 +124,18 @@ pod "static-busybox-minikube" deleted
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl get pods
 NAME                      READY   STATUS    RESTARTS   AGE
 static-busybox-minikube   1/1     Running   0          32s
-
+```
 
 
 9. create a pod named temp-bus on a namespace named finance-guy:
 
+```
 kubectl apply -f 09-pod-temp-bus.yml
-
+```
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl apply -f 09-pod-temp-bus.yml 
 namespace/finance-guy created
 pod/temp-bus created
-
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl get ns
 NAME                   STATUS   AGE
 default                Active   5d20h
@@ -138,33 +144,35 @@ kube-node-lease        Active   5d20h
 kube-public            Active   5d20h
 kube-system            Active   5d20h
 kubernetes-dashboard   Active   5d
-
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl --namespace finance-guy get pods
 NAME       READY   STATUS    RESTARTS   AGE
 temp-bus   1/1     Running   0          81s
-
+```
 
 
 10. create persistent volume:
 
+```
 kubectl apply -f 10-persistent-volume.yml
+```
 
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl apply -f 10-persistent-volume.yml 
 persistentvolume/pv-analytics created
-
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl get pv
 NAME           CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS      CLAIM   STORAGECLASS   REASON   AGE
 pv-analytics   100Mi      RWX            Retain           Available                                   18s
-
+```
 
 
 11. create a pod with volume EmptyDir:
 
+```
 kubectl apply -f 11-Pod-with-Volume.yml
-
+```
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl apply -f 11-Pod-with-Volume.yml 
 pod/redis-storage-guy created
-
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl describe pod redis-storage-guy | grep Volume -B3 -A3
   Ready             True 
   ContainersReady   True 
@@ -173,33 +181,27 @@ Volumes:
   redis-storage-guy:
     Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
     Medium:     
-
+```
 
 
 12. create a pod with a persistent volume attached:
 
+```
 kubectl apply -f 12-pv-1-attched-pod.yml
-
+```
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl apply -f 12-pv-1-attached-pod.yml 
 persistentvolume/pv1 created
 persistentvolumeclaim/pv1-claim created
 pod/use-pv-guy created
-
-
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl get pods
 NAME                      READY   STATUS    RESTARTS   AGE
 static-busybox-minikube   1/1     Running   1          23m
 use-pv-guy                1/1     Running   0          4m47s
-
-
-
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl get pv
 NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS      CLAIM               STORAGECLASS   REASON   AGE
 pv1                                        200Mi      RWO            Retain           Available                                               4m12s
 pvc-beacfeba-81b8-4186-9639-0b11947d70fe   100Mi      RWO            Delete           Bound       default/pv1-claim   standard                4m12s
-
-
-
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl describe pod use-pv-guy | grep -A3 -B3 Mounts
     Ready:          True
     Restart Count:  0
@@ -207,7 +209,6 @@ guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl 
     Mounts:
       /data from pv1-claim (rw)
       /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-ffpk8 (ro)
-
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl describe pod use-pv-guy | grep -A3 -B3 Volumes
   Ready             True 
   ContainersReady   True 
@@ -216,23 +217,18 @@ Volumes:
   pv1-claim:
     Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
     ClaimName:  pv1-claim
-
+```
 
 13. create deployment and record the update:
-
-kubectl apply -f 13-Deploy-and-update.yml;
-
+```
+kubectl apply -f 13-Deploy-and-update.yml
+```
+```
 kubectl set image deployment/nginx-deploy nginx=nginx:1.17 --record
-
-
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl apply -f 13-Deploy-and-update.yml 
 deployment.apps/nginx-deploy created
-
-
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl set image deployment/nginx-deploy nginx=nginx:1.17 --record 
 deployment.apps/nginx-deploy image updated
-
-
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl describe deployments nginx-deploy | grep -A5 -B5 Annotations
 Name:                   nginx-deploy
 Namespace:              default
@@ -244,42 +240,37 @@ Selector:               app=nginx
 Replicas:               1 desired | 1 updated | 1 total | 1 available | 0 unavailable
 StrategyType:           RollingUpdate
 MinReadySeconds:        0
+```
 
 
+14. create an nginx pod, expose it and use image busybox:1.28 for dns lookup, record results in ./root/nginx....svc and ./root/nginx....pod.
 
-14. create an nginx pod, expose it and use image busybox:1.28 for dns lookup, record results in /root/nginx....svc and /root/nginx....pod.
-
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl apply -f 14-deployment-exposed-and-recorded.yml 
 pod/nginx-resolver created
 service/nginx-resolver-service created
-
-
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl get pods
 NAME                      READY   STATUS      RESTARTS   AGE
 nginx-resolver            1/1     Running     0          38s
-
-
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl get svc nginx-resolver-service 
 NAME                     TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)   AGE
 nginx-resolver-service   ClusterIP   10.102.189.101   <none>        80/TCP    105s
-
-
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl run busybox-nslookup --image=busybox:1.28 -- nslookup nginx-resolver-service
 pod/busybox-nslookup created
 
-didn't manage to make it work from here... :(
+```
+didn't manage to make it work from here... recorded no results... :(
 
 
 15. create static pod on node01 make sure it is restarted automatically:
-
+```
 <!-- minikube's option for nameing nodes is quite complex, I didn't rename and went on with minikube-m02 node. -->
-
+```
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ minikube ssh -n minikube-m02
 Last login: Mon Jul 19 18:50:50 2021 from 192.168.49.1
 docker@minikube-m02:~$ sudo -i
 root@minikube-m02:~# cd /etc/kubernetes/manifests/
-
-
 root@minikube-m02:/etc/kubernetes/manifests# cat nginx-critical.yml 
 apiVersion: v1
 kind: Pod
@@ -306,7 +297,6 @@ guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl 
 NAME                          READY   STATUS    RESTARTS   AGE
 nginx-critical-minikube-m02   1/1     Running   0          42s
 static-busybox-minikube       1/1     Running   7          129m
-
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl delete pod nginx-critical-minikube-m02 
 pod "nginx-critical-minikube-m02" deleted
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl get pod nginx-critical-minikube-m02 
@@ -315,16 +305,17 @@ nginx-critical-minikube-m02   0/1     Pending   0          6s
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl get pod nginx-critical-minikube-m02 
 NAME                          READY   STATUS    RESTARTS   AGE
 nginx-critical-minikube-m02   1/1     Running   0          9s
+```
 
 16. create a pod called multi-pod with two containers:
 
+```
 kubectl apply -f 16-create-multi-pod.yml
+```
 
-
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl apply -f 16-create-multi-pod.yml 
 pod/multi-pod created
-
-
 Events:
   Type    Reason     Age   From               Message
   ----    ------     ----  ----               -------
@@ -337,7 +328,7 @@ Events:
   Normal  Pulled     37s   kubelet            Successfully pulled image "busybox" in 2.308581166s
   Normal  Created    37s   kubelet            Created container beta
   Normal  Started    37s   kubelet            Started container beta
-
+```
 
 
 
