@@ -4,15 +4,18 @@ first, if you cloned this repo, cd inside the folder "First-16-Question".
 
 1. Deploy nginx pod:
 
-``` kubectl apply -f 01-nginx-pod-deploy.yml
+```
+ kubectl apply -f 01-nginx-pod-deploy.yml
+```
 
-
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl apply -f 01-nginx-pod-deploy.yml 
 pod/nginx-pod-guy created
 
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl get pods
 NAME                          READY   STATUS    RESTARTS   AGE
 nginx-pod-guy                 1/1     Running   0          27s
+
 ```
 
 
@@ -20,23 +23,25 @@ nginx-pod-guy                 1/1     Running   0          27s
 
 2. Deploy message pod:
 
-```kubectl apply -f 02-message-pod.yml
-
+```
+kubectl apply -f 02-message-pod.yml
+```
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl apply -f 02-message-pod.yml 
 pod/messaging created
-
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl get pods
 NAME                          READY   STATUS    RESTARTS   AGE
 messaging                     1/1     Running   0          25s
 ```
 
 3. create a namespace:
-
+```
 kubectl create -f 03-namespace.yml
+```
 
+```
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl create -f 03-namespace.yml 
 namespace/apx-x998-guy created
-
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl get ns
 NAME                   STATUS   AGE
 apx-x998-guy           Active   25s
@@ -45,13 +50,15 @@ kube-node-lease        Active   5d20h
 kube-public            Active   5d20h
 kube-system            Active   5d20h
 kubernetes-dashboard   Active   4d23h
-
+```
 
 
 
 4. to create a json file with a list of nodes into a file named "nodes-guy", type this command: 
 
+```
 kubectl get -o json nodes > ./04-tmp/nodes-guy
+```
 
 solution is very long, added the folder and file into the git.
 
