@@ -6,6 +6,7 @@ first, if you cloned this repo, cd inside the folder "First-16-Question".
 
 ``` kubectl apply -f 01-nginx-pod-deploy.yml
 
+
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl apply -f 01-nginx-pod-deploy.yml 
 pod/nginx-pod-guy created
 
@@ -13,6 +14,8 @@ guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl 
 NAME                          READY   STATUS    RESTARTS   AGE
 nginx-pod-guy                 1/1     Running   0          27s
 ```
+
+
 
 
 2. Deploy message pod:
