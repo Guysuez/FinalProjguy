@@ -5,14 +5,14 @@ metadata:
     deployment.kubernetes.io/revision: "1"
     kubectl.kubernetes.io/last-applied-configuration: |
       {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"creationTimestamp":null,"labels":{"app":"webapp"},"name":"webapp","namespace":"default"},"spec":{"replicas":5,"selector":{"matchLabels":{"app":"webapp"}},"strategy":{},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"webapp"}},"spec":{"containers":[{"image":"nginx","name":"nginx","resources":{}}]}}},"status":{}}
-  creationTimestamp: "2021-07-17T13:57:35Z"
+  creationTimestamp: "2021-07-19T21:48:20Z"
   generation: 1
   labels:
     app: webapp
   name: webapp
   namespace: default
-  resourceVersion: "225677"
-  uid: 1722d1cb-8cdb-4e7c-9231-7dc682d195d5
+  resourceVersion: "374525"
+  uid: bda5c74d-b9b5-4bda-a8a3-4be46dfb6ceb
 spec:
   progressDeadlineSeconds: 600
   replicas: 5
@@ -46,14 +46,14 @@ spec:
 status:
   availableReplicas: 5
   conditions:
-  - lastTransitionTime: "2021-07-17T13:57:48Z"
-    lastUpdateTime: "2021-07-17T13:57:48Z"
+  - lastTransitionTime: "2021-07-19T21:48:35Z"
+    lastUpdateTime: "2021-07-19T21:48:35Z"
     message: Deployment has minimum availability.
     reason: MinimumReplicasAvailable
     status: "True"
     type: Available
-  - lastTransitionTime: "2021-07-17T13:57:35Z"
-    lastUpdateTime: "2021-07-17T13:57:52Z"
+  - lastTransitionTime: "2021-07-19T21:48:20Z"
+    lastUpdateTime: "2021-07-19T21:48:37Z"
     message: ReplicaSet "webapp-5654c984c" has successfully progressed.
     reason: NewReplicaSetAvailable
     status: "True"

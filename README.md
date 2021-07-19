@@ -639,50 +639,304 @@ kubectl create deployment webapp --image=nginx --dry-run -o yaml > webapp.yaml
 to run it with the 5 replicas already made, apply the file I edited; called 01-webapp.yaml under Deployments directory.
 
 
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl apply -f 01-webapp.yaml 
+deployment.apps/webapp created
+
+
+
 2. Get the deployment rollout status
+
 
 kubectl rollout status deployments/webapp
 
 
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl rollout status deployment webapp 
+deployment "webapp" successfully rolled out
+
+
+
 3. Get the replicaset that created with this deployment
+
 
 kubectl get replicasets
 
 
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl get replicasets
+NAME               DESIRED   CURRENT   READY   AGE
+webapp-5654c984c   5         5         5       118s
+
+
+
 4. EXPORT the yaml of the replicaset and pods of this deployment
+
 
 kubectl get deployments/webapp -o yaml > "filename"
 
-kubectl get replicaset/webapp-"result of Q3" -o yaml > "filename"
+
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl get deployments/webapp -o yaml > 04-webapp-deployment.yaml
+
+
+kubectl get replicaset webapp-"result of Q3" -o yaml > "filename"
+
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl get replicaset webapp-5654c984c -o yaml > 04-webapp-replicaset.yaml
 
 
 5. Delete the deployment you just created and watch all the pods are also being deleted
 
-kubectl delete -f webapp.yaml
+kubectl delete -f 01-webapp.yaml
 
 kubectl get pods --watch
 
 
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl delete -f 01-webapp.yaml 
+^[[A^[[A^[[A^[[Adeployment.apps "webapp" deleted
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl get pods --watch
+NAME                          READY   STATUS        RESTARTS   AGE
+nginx-critical-minikube-m02   1/1     Running       0          8m26s
+static-busybox-minikube       1/1     Running       10         8m26s
+webapp-5654c984c-6ljx8        0/1     Terminating   0          28s
+webapp-5654c984c-cdvs2        0/1     Terminating   0          28s
+webapp-5654c984c-hv9vt        0/1     Terminating   0          28s
+webapp-5654c984c-t24s2        0/1     Terminating   0          28s
+webapp-5654c984c-cdvs2        0/1     Terminating   0          33s
+webapp-5654c984c-cdvs2        0/1     Terminating   0          33s
+webapp-5654c984c-6ljx8        0/1     Terminating   0          33s
+webapp-5654c984c-6ljx8        0/1     Terminating   0          33s
+webapp-5654c984c-t24s2        0/1     Terminating   0          34s
+webapp-5654c984c-t24s2        0/1     Terminating   0          34s
+webapp-5654c984c-hv9vt        0/1     Terminating   0          34s
+webapp-5654c984c-hv9vt        0/1     Terminating   0          34s
+^Cguy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl get pods --watch
+NAME                          READY   STATUS    RESTARTS   AGE
+nginx-critical-minikube-m02   1/1     Running   0          8m45s
+static-busybox-minikube       1/1     Running   10         8m45s
+
+
+
 6. Create a deployment of webapp with image nginx:1.17.1 with container port 80 and verify the image version
+
+kubectl create deploy webapp --image=nginx:1.17.1 --dry-run -o yaml > 06-webapp.yaml
+
+for comfort run kubectl apply -f 06-webapp.yaml
+
+
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl apply -f 06-webapp.yaml 
+deployment.apps/webapp created
+
+
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl describe pod webapp-b7889ff56-xk4vd  | grep image
+  Normal  Pulling    2m46s  kubelet            Pulling image "nginx:1.17.1"
+  Normal  Pulled     2m25s  kubelet            Successfully pulled image "nginx:1.17.1" in 21.184697008s
+
 
 
 7. Update the deployment with the image version 1.17.4 and verify
 
 
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl rollout status deployment webapp 
+Waiting for deployment "webapp" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "webapp" rollout to finish: 1 old replicas are pending termination...
+deployment "webapp" successfully rolled out
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl set image deployments webapp nginx=nginx:1.17.4
+deployment.apps/webapp image updated
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl describe pod webapp-9cf988f87-vpxjp  | grep image
+  Normal  Pulling    54s   kubelet            Pulling image "nginx:1.17.4"
+  Normal  Pulled     32s   kubelet            Successfully pulled image "nginx:1.17.4" in 22.303459691s
+
+
 8. Check the rollout history and make sure everything is ok after the update
+
+
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl rollout history deployment webapp 
+deployment.apps/webapp 
+REVISION  CHANGE-CAUSE
+1         <none>
+2         <none>
+
+
 
 
 9. Undo the deployment to the previous version 1.17.1 and verify Image has the
 previous version
 
 
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl rollout undo deployment webapp 
+deployment.apps/webapp rolled back
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl rollout status deployment webapp 
+deployment "webapp" successfully rolled out
+
+
+
 10. Update the deployment with the wrong image version 1.100 and verify something is wrong with the deployment
+
+
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl set image deployment webapp nginx=nginx:1.000
+deployment.apps/webapp image updated
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl rollout status deployment webapp 
+Waiting for deployment "webapp" rollout to finish: 1 old replicas are pending termination...
+
+a. Expect: kubectl get pods (ImagePullErr)
+
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl get pods 
+NAME                          READY   STATUS             RESTARTS   AGE
+nginx-critical-minikube-m02   1/1     Running            0          23m
+static-busybox-minikube       1/1     Running            11         23m
+webapp-7d8467f67-lhmzx        0/1     ImagePullBackOff   0          57s
+webapp-b7889ff56-m4rw5        1/1     Running            0          2m3s
+
+b. Undo the deployment with the previous version and verify everything is Ok
+
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl rollout undo deployment webapp 
+deployment.apps/webapp rolled back
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl rollout status deployment webapp 
+deployment "webapp" successfully rolled out
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl rollout history deployment webapp 
+deployment.apps/webapp 
+REVISION  CHANGE-CAUSE
+2         <none>
+4         <none>
+5         <none>
+
+
+d. Check the history of the specific revision of that deployment
+
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl rollout history deployment  webapp --revision=5
+deployment.apps/webapp with revision #5
+Pod Template:
+  Labels:	app=webapp
+	pod-template-hash=b7889ff56
+  Containers:
+   nginx:
+    Image:	nginx:1.17.1
+    Port:	80/TCP
+    Host Port:	0/TCP
+    Environment:	<none>
+    Mounts:	<none>
+  Volumes:	<none>
+
+  e. update the deployment with the image version latest and check the history and verify nothing is going on
+
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl set image deploy webapp nginx=nginx:latest
+deployment.apps/webapp image updated
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl rollout history deployment webapp 
+deployment.apps/webapp 
+REVISION  CHANGE-CAUSE
+2         <none>
+4         <none>
+5         <none>
+6         <none>
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl get pods
+NAME                          READY   STATUS    RESTARTS   AGE
+nginx-critical-minikube-m02   1/1     Running   0          33m
+static-busybox-minikube       1/1     Running   12         33m
+webapp-6b9d4c7497-4dptj       1/1     Running   0          5m19s
+
 
 
 11. Apply the autoscaling to this deployment with and verify hpa is created and replicas are increased
 
 
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl autoscale deployment webapp --max=20 --min=10 --cpu-percent=85
+horizontalpodautoscaler.autoscaling/webapp autoscaled
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl get horizontalpodautoscalers.autoscaling webapp 
+NAME     REFERENCE           TARGETS         MINPODS   MAXPODS   REPLICAS   AGE
+webapp   Deployment/webapp   <unknown>/85%   10        20        10         69s
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl get deployments.apps 
+NAME     READY   UP-TO-DATE   AVAILABLE   AGE
+webapp   10/10   10           10          24m
+
+
 13. Clean the cluster by deleting deployment and hpa you just created
+
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl delete horizontalpodautoscalers.autoscaling webapp 
+horizontalpodautoscaler.autoscaling "webapp" deleted
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl delete -f 0
+01-webapp.yaml             04-webapp-replicaset.yaml
+04-webapp-deployment.yaml  06-webapp.yaml
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl delete -f 06-webapp.yaml 
+deployment.apps "webapp" deleted
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl get pods
+NAME                          READY   STATUS    RESTARTS   AGE
+nginx-critical-minikube-m02   1/1     Running   0          37m
+static-busybox-minikube       1/1     Running   12         37m
+
 
 14. Create a job and make it run 10 times one after one (run > exit > run >exit ..) using
 the following configuration:
+
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl create job hello-job --image=busybox --dry-run -o yaml -- echo "hello I am from job" > hello-job.yaml
+W0720 01:27:12.313473 2496665 helpers.go:557] --dry-run is deprecated and can be replaced with --dry-run=client.
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl delete -f hello-job.yaml 
+job.batch "hello-job" deleted
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl apply -f hello-job.yaml 
+job.batch/hello-job created
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl get jobs
+NAME        COMPLETIONS   DURATION   AGE
+hello-job   1/10          5s         5s
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl get jobs
+NAME        COMPLETIONS   DURATION   AGE
+hello-job   1/10          8s         8s
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/Deployments$ kubectl get jobs
+NAME        COMPLETIONS   DURATION   AGE
+hello-job   2/10          10s        10s
+
+CONFIG MAP:
+
+1. Create a file called config.txt with two values key1=value1 and key2=value2 and
+verify the file
+
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/CONFIG-MAP$ cat >> config.txt <<EOF
+> key1=value1
+> key2=value2
+> EOF
+
+2. Create a configmap named keyvalcfgmap and read data from the file config.txt and verify that configmap is created correctly:
+
+
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/CONFIG-MAP$ kubectl create configmap keyvalcfgmap --from-file=config.txt 
+configmap/keyvalcfgmap created
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/CONFIG-MAP$ kubectl get configmaps 
+NAME               DATA   AGE
+keyvalcfgmap       1      55s
+kube-root-ca.crt   1      6d
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/CONFIG-MAP$ kubectl describe configmaps keyvalcfgmap 
+Name:         keyvalcfgmap
+Namespace:    default
+Labels:       <none>
+Annotations:  <none>
+
+Data
+====
+config.txt:
+----
+key1=value1
+key2=value2
+
+Events:  <none>
+
+3. Create an nginx pod and load environment values from the above configmap
+keyvalcfgmap and exec into the pod and verify the environment variables and delete
+the pod
+
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/CONFIG-MAP$ kubectl apply -f nginx-pod.yml 
+pod/nginx created
+guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/CONFIG-MAP$ kubectl exec -it nginx -- env
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+HOSTNAME=nginx
+TERM=xterm
+config.txt=key1=value1
+key2=value2
+
+KUBERNETES_PORT_443_TCP=tcp://10.96.0.1:443
+KUBERNETES_PORT_443_TCP_PROTO=tcp
+KUBERNETES_PORT_443_TCP_PORT=443
+KUBERNETES_PORT_443_TCP_ADDR=10.96.0.1
+KUBERNETES_SERVICE_HOST=10.96.0.1
+KUBERNETES_SERVICE_PORT=443
+KUBERNETES_SERVICE_PORT_HTTPS=443
+KUBERNETES_PORT=tcp://10.96.0.1:443
+NGINX_VERSION=1.21.1
+NJS_VERSION=0.6.1
+PKG_RELEASE=1~buster
+HOME=/root
+

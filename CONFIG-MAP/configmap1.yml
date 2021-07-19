@@ -1,0 +1,12 @@
+apiVersion: v1
+data:
+  config.txt: |
+    key1=value1
+    key2=value2
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2021-07-19T22:40:31Z"
+  name: keyvalcfgmap
+  namespace: default
+  resourceVersion: "377964"
+  uid: 17f6c4a1-ff7b-445c-b1af-7d905354fd04

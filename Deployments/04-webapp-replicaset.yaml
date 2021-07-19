@@ -5,7 +5,7 @@ metadata:
     deployment.kubernetes.io/desired-replicas: "5"
     deployment.kubernetes.io/max-replicas: "7"
     deployment.kubernetes.io/revision: "1"
-  creationTimestamp: "2021-07-17T13:57:35Z"
+  creationTimestamp: "2021-07-19T21:48:20Z"
   generation: 1
   labels:
     app: webapp
@@ -18,9 +18,9 @@ metadata:
     controller: true
     kind: Deployment
     name: webapp
-    uid: 1722d1cb-8cdb-4e7c-9231-7dc682d195d5
-  resourceVersion: "225676"
-  uid: d296d7e6-937f-4d98-94e3-e6d55bcc02a5
+    uid: bda5c74d-b9b5-4bda-a8a3-4be46dfb6ceb
+  resourceVersion: "374524"
+  uid: efc0293e-7d46-4603-99e0-73a3c9713bc0
 spec:
   replicas: 5
   selector:
