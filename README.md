@@ -4,7 +4,7 @@ first, if you cloned this repo, cd inside the folder "First-16-Question".
 
 1. Deploy nginx pod:
 
-kubectl apply -f 01-nginx-pod-deploy.yml
+``` kubectl apply -f 01-nginx-pod-deploy.yml
 
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl apply -f 01-nginx-pod-deploy.yml 
 pod/nginx-pod-guy created
@@ -12,12 +12,12 @@ pod/nginx-pod-guy created
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl get pods
 NAME                          READY   STATUS    RESTARTS   AGE
 nginx-pod-guy                 1/1     Running   0          27s
-
+```
 
 
 2. Deploy message pod:
 
-kubectl apply -f 02-message-pod.yml
+```kubectl apply -f 02-message-pod.yml
 
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl apply -f 02-message-pod.yml 
 pod/messaging created
@@ -25,7 +25,7 @@ pod/messaging created
 guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl get pods
 NAME                          READY   STATUS    RESTARTS   AGE
 messaging                     1/1     Running   0          25s
-
+```
 
 3. create a namespace:
 
