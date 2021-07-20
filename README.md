@@ -25,12 +25,12 @@ first, if you cloned this repo, cd inside the folder "First-16-Question".
 ```
 kubectl apply -f 02-message-pod.yml
 ```
-```
-guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl apply -f 02-message-pod.yml 
-pod/messaging created
-guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl get pods
-NAME                          READY   STATUS    RESTARTS   AGE
-messaging                     1/1     Running   0          25s
+```diff
++guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl apply -f 02-message-pod.yml 
++pod/messaging created
++guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl get pods
++NAME                          READY   STATUS    RESTARTS   AGE
++messaging                     1/1     Running   0          25s
 ```
 
 3. create a namespace:
@@ -38,17 +38,17 @@ messaging                     1/1     Running   0          25s
 kubectl create -f 03-namespace.yml
 ```
 
-```
-guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl create -f 03-namespace.yml 
-namespace/apx-x998-guy created
-guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl get ns
-NAME                   STATUS   AGE
-apx-x998-guy           Active   25s
-default                Active   5d20h
-kube-node-lease        Active   5d20h
-kube-public            Active   5d20h
-kube-system            Active   5d20h
-kubernetes-dashboard   Active   4d23h
+```diff
++guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl create -f 03-namespace.yml 
++namespace/apx-x998-guy created
++guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl get ns
++NAME                   STATUS   AGE
++apx-x998-guy           Active   25s
++default                Active   5d20h
++kube-node-lease        Active   5d20h
++kube-public            Active   5d20h
++kube-system            Active   5d20h
++kubernetes-dashboard   Active   4d23h
 ```
 
 
@@ -61,21 +61,21 @@ kubectl get -o json nodes > ./04-tmp/nodes-guy
 
 solution is very long, added the folder and file into the git.
 
-```
-cat ./04-tmp/nodes-guy
+```diff
+-cat ./04-tmp/nodes-guy
 ```
 
 5. Create a service to expose message pod:
 ```
 kubectl apply -f 05-06-service-messaging-service.yml
 ```
-```
-guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl apply -f 05-06-service-messaging-service.yml 
-service/messaging-service created
-guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl get svc
-NAME                TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
-kubernetes          ClusterIP   10.96.0.1        <none>        443/TCP    5d20h
-messaging-service   ClusterIP   10.105.184.201   <none>        6379/TCP   19s
+```diff
++guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl apply -f 05-06-service-messaging-service.yml 
++service/messaging-service created
++guy@virtbuntu:~/Desktop/Kubernetes/git/FinalProjguy/First-16-Questions$ kubectl get svc
++NAME                TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
++kubernetes          ClusterIP   10.96.0.1        <none>        443/TCP    5d20h
++messaging-service   ClusterIP   10.105.184.201   <none>        6379/TCP   19s
 ```
 
 
