@@ -274,7 +274,6 @@ didn't manage to make it work from here... recorded no results... :(
 +apiVersion: v1
 +kind: Pod
 +metadata:
-+ name: static-critical
 +root@minikube-m02:/etc/kubernetes/manifests# rm nginx-critical.yml 
 +root@minikube-m02:/etc/kubernetes/manifests# cat <<EOF>> nginx-critical.yml
 +> apiVersion: v1
